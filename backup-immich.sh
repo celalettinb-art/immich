@@ -22,8 +22,6 @@
 #     $date = (Get-Date).AddDays(-31)
 #     Get-ChildItem D:\Backup\immich | Where-Object {$_.LastWriteTime -lt $date} | Remove-Item -Force
 
-#!/usr/bin/env bash
-
 set -e
 
 ############################
