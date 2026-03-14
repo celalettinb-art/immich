@@ -24,29 +24,19 @@
 
 set -e
 
-############################
 # CONFIGURATION
-############################
-
-# SMB Server
-SMB_SERVER="192.168.1.100"
-SMB_SHARE="backup"
-SMB_USER="backupuser"
-SMB_PASS="passwort"
-
-# Temporary backup folder
+DATE=$(date +%Y-%m-%d)
+SERVER="//IP_ADDRESS/Backup"
 TMP_BACKUP_DIR="/tmp/immich-backup"
-DATE=$(date +"%Y-%m-%d_%H-%M-%S")
-BACKUP_FILE="immich_backup_${DATE}.zip"
+BACKUP_FILE="export_${DATE}.zip"
+REMOTE_DIR="immich" 
+CREDS="/root/.smbcredentials"
 
 # Folders to back up
 DIR1="/opt/immich/upload/library/admin"
 DIR2="/opt/immich/upload/backups"
 
-############################
 # BACKUP START
-############################
-
 echo "==== Immich Backup has started: $(date) ===="
 
 # Prepare the Temp directory
@@ -61,22 +51,14 @@ zip -r "${TMP_BACKUP_DIR}/${BACKUP_FILE}" \
 
 echo "ZIP created: ${TMP_BACKUP_DIR}/${BACKUP_FILE}"
 
-############################
 # UPLOAD TO SMB
-############################
-
 echo "Upload backup to SMB share..."
 
-smbclient //"${SMB_SERVER}"/"${SMB_SHARE}" \
-    -U "${SMB_USER}%${SMB_PASS}" \
-    -c "put ${TMP_BACKUP_DIR}/${BACKUP_FILE}"
+smbclient "$SERVER" -A="$CREDS" -c "cd $REMOTE_DIR; put $TMP_BACKUP_DIR/$BACKUP_FILE $BACKUP_FILE"
 
 echo "Upload succesfully."
 
-############################
 # CLEAN
-############################
-
 rm -f "${TMP_BACKUP_DIR}/${BACKUP_FILE}"
 
 echo "Temporary files have been deleted."
