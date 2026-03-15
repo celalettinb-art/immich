@@ -20,16 +20,7 @@
 #    grep CRON /var/log/syslog
 #    journalctl -u cron -f
 ## Clean up old backup files on Windows, where the SMB share is running, with a Powershell script:
-# Set the path to the folder
-#    $folder = "C:\Path\to\folder"
-#    # Get all files in the folder (no subfolders) and sort by last write time (oldest first)
-#    $files = Get-ChildItem -Path $folder -File | Sort-Object LastWriteTime
-#    # Continue only if more than one file exists
-#    if ($files.Count -gt 1) {
-#        # Delete all files except the newest one
-#        # Because of ascending sort: remove all except the last element
-#        $files[0..($files.Count - 2)] | Remove-Item -Force
-#    }
+# Get-ChildItem -Path "D:\Backup\immich" -File | Remove-Item -Force
 
 set -e
 
