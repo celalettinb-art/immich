@@ -11,7 +11,8 @@
 # Create a file in /root/ with the name backup-immich.sh and add this script content: nano /root/backup-immich.sh
 # Make the script executable: chmod +x /root/backup-immich.sh
 # Cronjob: 0 4 * * 0 /root/backup-immich.sh >> /var/log/smb_backup.log 2>&1
-# List Cronjobs: crontab -l | Edit Cronjobs crontab -e
+# List Cronjobs: crontab -l
+# Edit Cronjobs: crontab -e
 # Test by executing manually: /usr/bin/env -i HOME=/root PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bi  /root/backup-immich.sh  >> /var/log/smb_backup.log 2>&1
 ## Read logs:
 #    tail -n 50 /var/log/smb_backup.log
